@@ -1,0 +1,19 @@
+Year 2012
+---------
+
+Hard	Medium	Easy
+----    ------  ----
+AB	AG	AA
+AC	AI	AD
+AH	AK	AE
+AQ	AL	AF
+	AM	AN
+	AO	AU
+	AP	AV
+	AT
+	AW
+	AJ
+
+Total
+-----
+21 problems
