@@ -25,21 +25,25 @@ istream & operator >> (istream &in, Point &p) {
 }
 
 
+/* Horizontal direction: Left, Straight ahead or Right */
 enum Direction {
     L,
     S,
     R
 };
 
-
+/* Vertical direction: Up/Down */
 enum DirVert {
     Haut,
     Bas
 };
 
+//Directions left
 string directions;
+//Directions done
 string fait;
 
+/* Read and returns a direction from the directions not yet done */
 Direction lire_direction() {
     Direction  ret;
     char c  = directions[0];
@@ -96,6 +100,7 @@ int main()
     Point balle;
 
 
+    /* Initialize ball's direction and position */
     Direction dir_balle = lire_direction();
     DirVert vert;
 
@@ -110,13 +115,13 @@ int main()
     }
 
     while (1) {
-        /* mur */
+        /* Check if the ball hit a wall and change direction before moving */
         if (balle.y == 0 && dir_balle == L) {
             dir_balle = R;
         } else if (balle.y == dimensions.y -1 && dir_balle == R) {
             dir_balle = L;
         }
-        /* obstacle */
+        /* Check if the ball hit an obstacle and change direction before moving */
         if (grille[balle.x][balle.y] == Obstacle) {
             if (dir_balle == L) {
                 dir_balle = R;
@@ -126,6 +131,7 @@ int main()
                 vert = (vert == Haut ? Bas : Haut);
             }
         }
+        /* Move the ball */
         if (dir_balle == L) {
             balle.y -= 1;
         } else if (dir_balle == R) {
@@ -136,7 +142,7 @@ int main()
         } else {
             balle.x += 1;
         }
-
+        /* Move the robots */
         if (balle.y < y1) {
             y1--;
         } else {
@@ -148,13 +154,14 @@ int main()
             y2++;
         }
 
+        /* If the ball is on the first row, check if Robot1 is there to catch it */
         if (balle.x == 0) {
             if (balle.y != y1) {
                 who = Robot2;
                 break;
             } else {
                 if (directions.empty()) {
-                    who = Vide;
+                    who = Vide; //Tie
                     break;
                 } else {
                     dir_balle = lire_direction();
@@ -162,12 +169,13 @@ int main()
                 }
             }
         } else if (balle.x == dimensions.x -1) {
+            /* If the ball is on the last row, check if Robot2 is there to catch it */
             if (balle.y != y2) {
                 who = Robot1;
                 break;
             } else {
                 if (directions.empty()) {
-                    who = Vide;
+                    who = Vide; //Tie
                     break;
                 } else {
                     dir_balle = lire_direction();
